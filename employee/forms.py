@@ -15,3 +15,17 @@ class EmployeeCreateForm(ModelForm):
             'emp_gender',
             'emp_contact',
         )
+
+
+class EmployeeChangeForm(ModelForm):
+    class Meta:
+        model = Employee
+        fields = (
+            'emp_name',
+            'emp_role',
+            'emp_salary',
+            'emp_education',
+            'emp_age',
+            'emp_gender',
+            'emp_contact',
+        )

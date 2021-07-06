@@ -10,17 +10,18 @@ def generate_id(sender, instance, created, **kwargs):
     if created:
         user_id = instance.id
 
-        if instance.emp_role == 'hr':
+        if instance.emp_role == 'HR':
             instance.emp_id = f'H-{user_id}'
             # setting user id to employee id with based on employee role.
 
-        elif instance.emp_role == 'developer':
+        elif instance.emp_role == 'Developer':
             instance.emp_id = f'D-{user_id}'
 
-        elif instance.emp_role == 'manager':
+        elif instance.emp_role == 'Manager':
+            print()
             instance.emp_id = f'M-{user_id}'
 
-        elif instance.emp_role == 'tester':
+        elif instance.emp_role == 'Tester':
             instance.emp_id = f'T-{user_id}'
 
         instance.save()

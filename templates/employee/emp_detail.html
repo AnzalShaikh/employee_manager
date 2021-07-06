@@ -1,0 +1,38 @@
+{% extends 'base.html' %} {% block content %}
+<div class="row">
+  <div class="col-8">
+    <div class="card bg-light mb-3 mt-2">
+      <div class="card-header">Employee Details</div>
+      <div class="card-body">
+        <p class="card-text">Name: {{emp.emp_name}}</p>
+        <p class="card-text">Employee ID: {{emp.emp_id}}</p>
+        <p class="card-text">Role: {{emp.emp_role}}</p>
+        <p class="card-text">Salary: {{emp.emp_salary}}</p>
+        <p class="card-text">Joined Date: {{emp.emp_joinied_date}}</p>
+        <p class="card-text">Education: {{emp.emp_education}}</p>
+        <p class="card-text">Age: {{emp.emp_age}}</p>
+        <p class="card-text">Gender: {{emp.emp_gender}}</p>
+        <p class="card-text">Contact: {{emp.emp_contact}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="card bg-light mb-3 mt-2">
+      <div class="card-header">Update</div>
+      <div class="card-body">
+        <a
+          class="btn btn-outline-info btn-block"
+          href="{% url 'update_emp' emp.id %}"
+          >Update</a
+        >
+        <a
+          class="btn btn-outline-danger btn-block"
+          href="{% url 'delete_emp' emp.id %}"
+          >Delete</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

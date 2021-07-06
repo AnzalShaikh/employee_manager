@@ -1,0 +1,28 @@
+{% extends 'base.html' %} {% block content %}
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Id</th>
+      <th scope="col">Role</th>
+      <th scope="col">Detail</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for emp in emp_list %}
+    <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+      <td>{{emp.emp_name}}</td>
+      <td>{{emp.emp_id}}</td>
+      <td>{{emp.emp_role}}</td>
+      <td>
+        <a class="btn btn-sm btn-primary" href="{% url 'detail_emp' emp.id %}"
+          >View</a
+        >
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock content %}

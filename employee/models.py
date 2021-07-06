@@ -4,10 +4,10 @@ from datetime import date
 
 User = get_user_model()
 
-EMPLOYEE_ROLE = [('hr', 'HR'), ('developer', 'Developer'),
-                 ('tester', 'Tester'), ('manager', 'Manager')]
+EMPLOYEE_ROLE = [('HR', 'hr'), ('Developer', 'developer'),
+                 ('Tester', 'tester'), ('Manager', 'manager')]
 
-GENDER = [('male', 'Male'), ('female', 'Female')]
+GENDER = [('Male', 'male'), ('Female', 'female')]
 
 
 class Employee(models.Model):

@@ -12,31 +12,35 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    {% if user.is_authenticated %}
     <ul class="navbar-nav">
       <li class="nav-item active">
         <a class="nav-link" href="{% url 'home' %}"
           >Home <span class="sr-only">(current)</span></a
         >
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Features</a>
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'list_emp' %}">Employees</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Pricing</a>
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'signup' %}">Create User +</a>
       </li>
     </ul>
+    {% endif %}
     <ul class="nav navbar-nav ml-auto">
+      {% if user.is_authenticated %}
       <li class="nav-item">
-        <a class="btn btn-outline-primary ml-2" href="{% url 'signup' %}"
-          >Sign Up</a
+        <a class="btn btn-outline-dark btn-sm ml-2" href="{% url 'logout' %}"
+          >Logout</a
         >
       </li>
+      {% else %}
       <li class="nav-item">
-        <a class="btn btn-outline-success ml-2" href="#">Login</a>
+        <a class="btn btn-outline-dark btn-sm ml-2" href="{% url 'login' %}"
+          >Login</a
+        >
       </li>
-      <li class="nav-item">
-        <a class="btn btn-outline-primary ml-2" href="#">Logout</a>
-      </li>
+      {% endif %}
     </ul>
   </div>
 </nav>
