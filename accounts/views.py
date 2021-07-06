@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from .models import CustomUser
 from .forms import CustomUserCreationForm, CustomUserChangeForm
+from employee.decorators import user_is_admin
 
 
+@user_is_admin
 def signup_view(requeset):
     '''function to create user'''
 

@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Employee
 from .forms import EmployeeCreateForm, EmployeeChangeForm
 from accounts.forms import CustomUserChangeForm
+from .decorators import user_is_admin, user_or_admin
 
 User = get_user_model()
 
@@ -12,10 +13,12 @@ User = get_user_model()
 @login_required
 def home_view(request):
     '''function view for home view'''
+    print(request.user.user_type)
 
     return render(request, 'employee/home.html')
 
 
+@user_is_admin
 def emp_create_view(request, pk):
     '''function view to create employee'''
 
@@ -43,6 +46,10 @@ def emp_list_view(request):
     return render(request, 'employee/emp_list.html', context)
 
 
+# put all decorator in this order.
+# first it verify login auth.
+# then user or admin.
+@user_or_admin
 @login_required
 def emp_detail_view(request, pk):
     '''function view for employee detail view'''
@@ -53,6 +60,7 @@ def emp_detail_view(request, pk):
     return render(request, 'employee/emp_detail.html', context)
 
 
+@user_or_admin
 @login_required
 def emp_update_view(request, pk):
     '''function view to update employee details'''
@@ -69,6 +77,7 @@ def emp_update_view(request, pk):
     return render(request, 'employee/emp_update.html', context)
 
 
+@user_is_admin
 @login_required
 def emp_delete_view(request, pk):
     '''function view to delete employee'''
