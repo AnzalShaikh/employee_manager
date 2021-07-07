@@ -1,3 +1,4 @@
+from django import forms
 from django.forms import ModelForm
 from .models import Employee
 
@@ -29,3 +30,7 @@ class EmployeeChangeForm(ModelForm):
             'emp_gender',
             'emp_contact',
         )
+
+
+class UploadForm(forms.Form):
+    file = forms.FileField()

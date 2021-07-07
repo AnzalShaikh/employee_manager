@@ -1,0 +1,12 @@
+{% extends 'base.html' %} {% load crispy_forms_tags %} {% block content %}
+<div class="row h-100 justify-content-center align-items-center mt-4">
+  <div class="card" style="width: 30rem">
+    <div class="card-body">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %} {{form|crispy}}
+        <button class="btn btn-primary" type="submit">Upload</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock content %}

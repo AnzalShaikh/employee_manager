@@ -3,9 +3,10 @@ from django.urls import reverse
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from .models import Employee
-from .forms import EmployeeCreateForm, EmployeeChangeForm
+from .forms import EmployeeCreateForm, EmployeeChangeForm, UploadForm
 from accounts.forms import CustomUserChangeForm
 from .decorators import user_is_admin, user_or_admin
+import csv
 
 User = get_user_model()
 
@@ -90,3 +91,45 @@ def emp_delete_view(request, pk):
 
     context = {'emp': emp}
     return render(request, 'employee/emp_delete.html', context)
+
+
+@user_is_admin
+@login_required
+def emp_dataupload_view(request):
+    '''function view to upload csv file'''
+
+    form = UploadForm(data=request.POST or None, files=request.FILES)
+    if form.is_valid():
+        file = request.FILES['file']
+
+        decoded_file = file.read().decode('utf-8').splitlines()
+        reader = csv.DictReader(decoded_file)
+        for row in reader:
+            create_emp(row)
+        return redirect('list_emp')
+
+    context = {'form': form}
+    return render(request, 'employee/upload_form.html', context)
+
+
+def create_emp(data):
+    user = User.objects.create_user(username=data['username'],
+                                    email=data['email'],
+                                    user_type=data['user_type'],
+                                    password=data['password'])
+
+    user.save()
+    if user:
+        emp = Employee.objects.create(
+            emp_name=data['emp_name'],
+            emp_role=data['emp_role'],
+            emp_salary=data['emp_salary'],
+            emp_joinied_date=data['emp_joinied_date'],
+            emp_education=data['emp_education'],
+            emp_age=data['emp_age'],
+            emp_gender=data['emp_gender'],
+            emp_contact=data['emp_contact'],
+        )
+
+    emp.user = user
+    emp.save()

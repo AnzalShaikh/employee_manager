@@ -17,7 +17,8 @@ def user_is_admin(func):
     return wrap
 
 
-# put user is admin decorator on signup view, create employee view and delete view.
+# put user is admin decorator on signup view,
+# create employee view and delete view.
 
 
 def user_or_admin(func):
