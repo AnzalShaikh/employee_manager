@@ -1,6 +1,14 @@
 from django.urls import path
-from .views import (home_view, emp_create_view, emp_list_view, emp_detail_view,
-                    emp_update_view, emp_delete_view, emp_dataupload_view)
+from .views import (
+    home_view,
+    emp_create_view,
+    emp_list_view,
+    emp_detail_view,
+    emp_update_view,
+    emp_delete_view,
+    emp_dataupload_view,
+    export_data,
+)
 
 urlpatterns = [
     path('', home_view, name='home'),
@@ -11,4 +19,5 @@ urlpatterns = [
     path('update/<int:pk>', emp_update_view, name='update_emp'),
     path('delete/<int:pk>', emp_delete_view, name='delete_emp'),
     path('upload/', emp_dataupload_view, name='upload_data'),
+    path('export/', export_data, name='export_data'),
 ]

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from .models import Employee
 from .forms import EmployeeCreateForm, EmployeeChangeForm, UploadForm
 from accounts.forms import CustomUserChangeForm
@@ -14,7 +15,6 @@ User = get_user_model()
 @login_required
 def home_view(request):
     '''function view for home view'''
-    print(request.user.user_type)
 
     return render(request, 'employee/home.html')
 
@@ -56,7 +56,6 @@ def emp_detail_view(request, pk):
     '''function view for employee detail view'''
 
     emp = Employee.objects.get(id=pk)
-
     context = {'emp': emp}
     return render(request, 'employee/emp_detail.html', context)
 
@@ -133,3 +132,39 @@ def create_emp(data):
 
     emp.user = user
     emp.save()
+
+
+@user_is_admin
+@login_required
+def export_data(request):
+    response = HttpResponse(content_type='text/csv')
+
+    writer = csv.writer(response)
+    writer.writerow([
+        'User Name',
+        'Email',
+        'User Type',
+        'Name',
+        'ID',
+        'Role',
+        'Salary',
+        'Joined Date',
+        'Education',
+        'Age',
+        'Gender',
+        'Contact',
+        'User Name',
+        'Email',
+        'User Type',
+    ])
+
+    for emp in Employee.objects.all():
+        employee = (emp.user, emp.user.email, emp.user.user_type, emp.emp_name,
+                    emp.emp_id, emp.emp_role, emp.emp_salary,
+                    emp.emp_joinied_date, emp.emp_education, emp.emp_age)
+        writer.writerow(employee)
+
+    response[
+        'Content-Disposition'] = 'attachments; filename="employee_data.csv"'
+
+    return response
